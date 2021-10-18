@@ -57,8 +57,10 @@ async function getQuotesFromAPI() {
         const response =  await fetch(apiUrl);
         apiQuotes = await response.json();
         newQuote();
+        throw new Error('oops Something is wrong');
     } catch (error) {
-        //Catch Error
+        console.log(error)
+        getQuotesFromAPI();
     }
 }
 
