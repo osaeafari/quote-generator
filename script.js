@@ -8,43 +8,49 @@ const loader = document.getElementById('loader');
 
 let apiQuotes = [];
 
-// Show Loading
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 
-// Hide Loading 
-function complete() {
-    quoteContainer.hidden = false;
-    loader.hidden = true;
+// Hide Loading Spinner
+function removeLoadingSpinner() {
+    if (!loader.hidden) {
+        quoteContainer.hidden = false;
+        loader.hidden = true;
+    }
 }
 
 // Show new  Quote
-function newQuote() {
-    loading();
+function getQuote() {
+    showLoadingSpinner();
     // Pick a random quote from apiQuotes array
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
-    // Check is author field is blank and replace it with unknown
-    if (!quote.author) {
-        authorText.textContent = 'Unknown';
-    } else {
-        authorText.textContent = quote.author;
-    }
-
-    //Check Quote length to determine styling
-    if (quote.text.length > 120) {
-        quoteText.classList.add('long-quote');
-    } else {
-        quoteText.classList.remove('long-quote');
-    }
-    // Set uote, Hide Loader
-    quoteText.textContent = quote.text;
-    complete();
+    try {
+        // Check is author field is blank and replace it with unknown
+        if (!quote.author) {
+            authorText.textContent = 'Unknown';
+        } else {
+            authorText.textContent = quote.author;
+        }
+    
+        //Check Quote length to determine styling
+        if (quote.text.length > 120) {
+            quoteText.classList.add('long-quote');
+        } else {
+            quoteText.classList.remove('long-quote');
+        }
+        quoteText.textContent = quote.text;
+        removeLoadingSpinner(); 
+        throw new Error('oops Something is wrong');
+    } catch (error) {
+        console.log(error)
+        getQuote();
+    }   
 }
 
 // Get Quotes From API
-async function getQuotes() {
+async function getQuotesFromAPI() {
     loading();
     const apiUrl = 'https://type.fit/api/quotes';
     try {
@@ -67,4 +73,4 @@ newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click', tweetQuote);
 
 // ON Load
-getQuotes();
+getQuotesFromAPI();
