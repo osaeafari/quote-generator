@@ -75,4 +75,4 @@ newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click', tweetQuote);
 
 // ON Load
-getQuotesFromAPI();
+getQuote();
