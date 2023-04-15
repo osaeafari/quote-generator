@@ -5,7 +5,6 @@ const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 
-
 let apiQuotes = [];
 
 function showLoadingSpinner() {
@@ -75,4 +74,4 @@ newQuoteBtn.addEventListener('click', newQuote);
 twitterBtn.addEventListener('click', tweetQuote);
 
 // ON Load
-getQuote();
+getQuotesFromAPI();
